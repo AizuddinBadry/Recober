@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="307px" height="152px" viewBox="0 0 307 152" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 15</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="307" height="152" rx="4"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="307" height="152" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4_10_recober-package" transform="translate(-696.000000, -569.000000)">
+            <g id="Group-4" transform="translate(470.000000, 120.000000)">
+                <g id="Group-20" transform="translate(226.000000, 448.000000)">
+                    <g id="Group-19" transform="translate(0.000000, 1.000000)">
+                        <g id="Group-15">
+                            <g id="Group-14">
+                                <g id="Group-16" stroke="#30B0EB" stroke-width="2" fill="#FFFFFF">
+                                    <use id="Rectangle-14" mask="url(#mask-2)" xlink:href="#path-1"></use>
+                                </g>
+                                <path d="M0,3.99867355 C0,1.79026713 1.78365078,0 3.99389641,0 L303.006104,0 C305.211872,0 307,1.78922072 307,3.99867355 L307,93.7580581 L0,93.7580581 L0,3.99867355 Z" id="Rectangle-14" fill="#19A7E8"></path>
+                            </g>
+                            <text id="SMALL-ASSOCIATION" font-family="ProximaNova-Semibold, Proxima Nova" font-size="20" font-weight="500" fill="#FFFFFF">
+                                <tspan x="33" y="37">SMALL ASSOCIATION</tspan>
+                            </text>
+                            <text id="FREE" font-family="ProximaNova-Regular, Proxima Nova" font-size="20" font-weight="normal" fill="#FFFFFF">
+                                <tspan x="33" y="68">FREE</tspan>
+                            </text>
+                            <text id="Up-to-7-members-only" font-family="ProximaNova-Regular, Proxima Nova" font-size="16" font-weight="normal" fill="#474747">
+                                <tspan x="33" y="126">Up to 7 members only</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
