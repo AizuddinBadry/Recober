@@ -12,9 +12,9 @@ class Item extends React.Component {
 				<a href="#">{this.props.name}</a> (Group)
 			</th>
 			<td></td>
-			<td></td>
-			<td><i className="fa fa-check-circle publish"></i></td>
-			<td><i className="fa fa-check-circle publish"></i></td>
+			<td>{this.props.published ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
+			<td>{this.props.required ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
+			<td>{this.props.registraion ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
 		</tr>
       { this.props.fields }
     </tbody>
@@ -111,10 +111,10 @@ class customize_profile extends React.Component{
 							<td>
 								<a href="#">{index.name}</a>
 							</td>
-							<td></td>
-							<td></td>
-							<td><i className="fa fa-check-circle publish"></i></td>
-							<td><i className="fa fa-check-circle publish"></i></td>
+							<td>{index.field_type}</td>
+							<td>{index.published ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
+							<td>{index.required ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
+							<td>{index.registration ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
 						</tr>
 		              )
 					})    
@@ -122,7 +122,13 @@ class customize_profile extends React.Component{
 		      }
 		      return data.map((node, index) => {
 			      return (
-			      	<Item key={ node.id } name={ node.name } fields={ fields(node.profile_fields) }>
+			      	<Item 
+			      	key={ node.id } 
+			      	name={ node.name } 
+			      	required={node.required} 
+			      	published={node.published}
+			      	registration={node.registration}
+			      	fields={ fields(node.profile_fields) }>
 			        { fields(node.profile_fields) }
 			      </Item>
 			      )

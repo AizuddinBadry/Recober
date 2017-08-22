@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal } from 'semantic-ui-react'
 
 class membership_plan extends React.Component{
+	
 	render(){
 		return(
 			<div>
@@ -86,66 +87,6 @@ class membership_plan extends React.Component{
 								<td>RM 19.99</td>
 								<td>Single</td>
 								<td>1 month</td>
-								<td>08/12/2016</td>
-								<td><i className="fa fa-check-circle publish"></i></td>
-							</tr>
-							<tr>
-								<td className="multi-prof"><input id="memberplan3" type="checkbox"/></td>
-								<td>
-									<a href="#">PREMIUM</a>
-								</td>
-								<td>Unlimited Plan</td>
-								<td>RM 19.99</td>
-								<td>Single</td>
-								<td>-</td>
-								<td>08/12/2016</td>
-								<td><i className="fa fa-check-circle publish"></i></td>
-							</tr>
-							<tr>
-								<td className="multi-prof"><input id="memberplan4" type="checkbox"/></td>
-								<td>
-									<a href="#">PREMIUM</a>
-								</td>
-								<td>Unlimited Plan</td>
-								<td>RM 19.99</td>
-								<td>Single</td>
-								<td>2 months</td>
-								<td>08/12/2016</td>
-								<td><i className="fa fa-check-circle publish"></i></td>
-							</tr>
-							<tr>
-								<td className="multi-prof"><input id="memberplan5" type="checkbox"/></td>
-								<td>
-									<a href="#">PREMIUM</a>
-								</td>
-								<td>Unlimited Plan</td>
-								<td>RM 19.99</td>
-								<td>Single</td>
-								<td>1 month</td>
-								<td>08/12/2016</td>
-								<td><i className="fa fa-check-circle publish"></i></td>
-							</tr>
-							<tr>
-								<td className="multi-prof"><input id="memberplan6" type="checkbox"/></td>
-								<td>
-									<a href="#">PREMIUM</a>
-								</td>
-								<td>Unlimited Plan</td>
-								<td>RM 19.99</td>
-								<td>Single</td>
-								<td>-</td>
-								<td>08/12/2016</td>
-								<td><i className="fa fa-check-circle publish"></i></td>
-							</tr>
-							<tr>
-								<td className="multi-prof"><input id="memberplan7" type="checkbox"/></td>
-								<td>
-									<a href="#">PREMIUM</a>
-								</td>
-								<td>Unlimited Plan</td>
-								<td>RM 19.99</td>
-								<td>Single</td>
-								<td>-</td>
 								<td>08/12/2016</td>
 								<td><i className="fa fa-check-circle publish"></i></td>
 							</tr>
