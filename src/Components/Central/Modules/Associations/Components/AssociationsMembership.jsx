@@ -4,13 +4,11 @@ import { Button, Modal } from 'semantic-ui-react'
 
 
 class AssociationsMembership extends React.Component{
-	state = { open: false }
-
-  	show = (size) => () => this.setState({ size, open: true })
-  	close = () => this.setState({ open: false })
-
+	
+	handleNext = () =>{
+		window.location = '/central/associations/create/manual'
+	}
 	render(){
-		const { open, size } = this.state
 		return(
 			<div className="off-canvas-wrapper1">
 				<div className="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
@@ -32,7 +30,6 @@ class AssociationsMembership extends React.Component{
 											<li className="tabs-title"><a className="align-left" aria-selected="true">ASSOCIATION SETTINGS</a></li>
 										</ul>
 										<div className="tabs-content" data-tabs-content="deeplinked-tabs">
-												<form>
 													<div className="sub-content align-text">
 														<p>You just need a few steps to add your association</p>
 														<div className="row">
@@ -68,11 +65,10 @@ class AssociationsMembership extends React.Component{
 																<button className="btn cancel"><a href="/central/associations/create/domain">BACK</a></button>
 															</div>
 															<div className="small-6 large-6 columns-2">
-																<button className="btn btn-primary"><a href="/central/associations/create/manual">CONTINUE <i className="fa fa-long-arrow-right"></i></a></button>
+																<button className="btn btn-primary" onClick={this.handleNext}>CONTINUE <i className="fa fa-long-arrow-right"></i></button>
 															</div>
 														</div>
 													</div>
-												</form>
 											</div>
 										</div>
 									</div>

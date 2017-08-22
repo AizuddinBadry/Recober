@@ -1,8 +1,66 @@
 import React from 'react'
+import axios from 'axios'
 import Sidebar from 'Components/Central/CentralSidebar'
 
 class Profile extends React.Component{
+	constructor(props) {
+    super(props);
+    this.state = {profile_picture:'',name:'',password:'',email:''}
+  }
+
+  componentDidMount() {
+    var self = this;
+		var id = localStorage.getItem('id');
+		axios.get('http://localhost:3001/account/details/' + id)
+		  .then(function (response) {
+			self.setState({
+				profile_picture:response.data['profile_picture'],
+				name:response.data['name'],
+				email:response.data['email'],
+				password:response.data['password']
+			})
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+  }
+
+  handleChange = (e) => {
+		this.setState({[e.target.name]: e.target.value})
+	}
+
+ handleChangeImage = (evt) => {
+      var self = this;
+      var reader = new FileReader();
+      var file = evt.target.files[0];
+
+      reader.onload = function(upload) {
+          self.setState({
+          profile_picture: upload.target.result
+      }, function() {
+      });
+      };
+      reader.readAsDataURL(file);
+  }
+
+  handleSubmit = (e) => {
+		var {name,email,password,profile_picture} = this.state
+		var id = localStorage.getItem('id');
+		axios.post('http://localhost:3001/account/update/'+ id, {
+			name: name,
+		    email: email,
+		    profile_picture: profile_picture,
+		    password: password
+		  })
+		  .then(function (response) {
+		 	window.location.reload()
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
 	render(){
+		var {name,email,password,profile_picture} = this.state
 		return(
 			<div className="off-canvas-wrapper1">
 				<div className="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
@@ -26,13 +84,16 @@ class Profile extends React.Component{
 											</li>
 										</ul>
 										<div className="tabs-content" data-tabs-content="deeplinked-tabs">
-										<form>
 											<div className="sub-content">
 												<div className="row align-text">
 													<div className="large-12 columns profile-pic">
-														<img src="img/afgan.jpg"/>
+														<img src={this.state.profile_picture} width="250px" height="80px"/>
 														<br/>
-														<a className="small" href="#">Change Photo</a>
+														<div className="fileContainer">
+															Change Photo
+															<input name="profile_picture" type="file" hidden="hidden" onChange={this.handleChangeImage}/>
+														</div>
+														
 														<br/>
 													</div>
 												</div>
@@ -40,15 +101,15 @@ class Profile extends React.Component{
 												<div className="row ass-input profile-setting">
 													<div className="large-6 columns">
 														<label>Name</label>
-														<input name="ass_name" type="text"/>
+														<input name="name" type="text" value={name} onChange={this.handleChange}/>
 														<label>Email Address</label>
-														<input name="email-address" type="email"/>
+														<input name="email" type="email" value={email} onChange={this.handleChange}/>
 														
 														
 													</div>
 													<div className="large-6 columns">
 														<label for="password">Password</label>
-           												<input id="password" type="password" required="" name="password"/>
+           												<input id="password" type="password" value={password} name="password" onChange={this.handleChange}/>
 														<label for="confirm-password">Confirm Password</label>
            												<input id="confirm-password" type="password" required="" name="password"/>
 														
@@ -56,22 +117,20 @@ class Profile extends React.Component{
 													
 												</div>
 
-												<div className="row profile-setting btn-set">
-													<div className="small-12 large-6 columns-1">
-														<button className="btn cancel"><a href="index.html">CANCEL</a></button>
-													</div>
-													<div className="small-12 large-6 columns-2">
-														
-														<button className="btn btn-primary"><a href="index.html">SAVE</a></button>
+													<div className="row profile-setting btn-set">
+														<div className="small-12 large-6 columns-1">
+															<button className="btn cancel"><a href="index.html">CANCEL</a></button>
+														</div>
+														<div className="small-12 large-6 columns-2">
+															<button className="btn btn-primary" onClick={this.handleSubmit}>SAVE</button>
+														</div>
 													</div>
 												</div>
 											</div>
-										</form>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>

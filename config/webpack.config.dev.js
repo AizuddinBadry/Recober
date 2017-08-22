@@ -32,6 +32,7 @@ module.exports = {
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
+
   entry: [
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
@@ -46,6 +47,8 @@ module.exports = {
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
+    //require.resolve('./jquery.js'),
+    //require.resolve('./foundation.core.js'),
     // Errors should be considered fatal in development
     require.resolve('react-error-overlay'),
     // Finally, this is your app's code:
@@ -53,7 +56,9 @@ module.exports = {
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
+
   ],
+
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: paths.appBuild,
@@ -71,7 +76,23 @@ module.exports = {
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        loaders: [
+          {
+            test: /(foundation\.core)/,
+            loader: 'exports?foundation=jQuery.fn.foundation'
+          }
+        ],
+      }
+    })
+  ],
   resolve: {
+    extensions: ['', '.js'],
+    alias: {
+      foundation: 'foundation-sites/js/foundation.core'
+    },
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
@@ -101,6 +122,10 @@ module.exports = {
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
     ],
+  },
+  externals: {
+      jQuery: 'jquery',
+      foundation: 'Foundation'
   },
   module: {
     strictExportPresence: true,

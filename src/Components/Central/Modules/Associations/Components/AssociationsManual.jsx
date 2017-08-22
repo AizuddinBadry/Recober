@@ -4,13 +4,32 @@ import { Button, Modal } from 'semantic-ui-react'
 
 
 class AssociationsManual extends React.Component{
-	state = { open: false }
+	constructor(props) {
+		super(props);
+		this.state = {open:false,custom_id:''}
+	}
 
   	show = (size) => () => this.setState({ size, open: true })
   	close = () => this.setState({ open: false })
 
+  	handleChange = (e) => {
+  		this.setState({custom_id:e.target.value})
+  	}
+
+  	handleNext = (e) => {
+		var {custom_id} = this.state
+  		localStorage.setItem('custom_id', custom_id)
+  		if(localStorage.getItem('custom_id'))
+  		{
+  			window.location = '/central/associations/create/success'
+  		}
+  		else
+  		{
+
+  		}
+  	}
 	render(){
-		const { open, size } = this.state
+		const { open, size, custom_id } = this.state
 		return(
 			<div className="off-canvas-wrapper1">
 				<div className="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
@@ -32,7 +51,6 @@ class AssociationsManual extends React.Component{
 											<li className="tabs-title"><a className="align-left" aria-selected="true">ASSOCIATION SETTINGS</a></li>
 										</ul>
 										<div className="tabs-content" data-tabs-content="deeplinked-tabs">
-												<form>
 											<div className="sub-content align-text">
 												<p>You just need a few steps to add your association</p>
 												<div className="row">
@@ -54,12 +72,12 @@ class AssociationsManual extends React.Component{
 												</div>
 												<div className="row">
 													<div className="large-2 large-centered column ass-input">
-														<input name="manual-id" type="text"/>
+														<input name="manual-id" type="text" onChange={this.handleChange}/>
 													</div>
 												</div>
 												<div className="row">
 													<div className="large-12 large-centered column">
-														<p className="mid-bold">Your Associations ID : <span className="green">ABC1, ABC2, ABC3, ...</span></p>
+														<p className="mid-bold">Your Associations ID : <span className="green">{custom_id + 1}, {custom_id + '2'}, {custom_id + '3'} ...</span></p>
 													</div>
 												</div>
 												<div className="row">
@@ -71,12 +89,11 @@ class AssociationsManual extends React.Component{
 															<button className="btn cancel"><a href="/central/associations/create/membership">BACK</a></button>
 														</div>
 														<div className="small-6 large-6 columns-2">
-															<button className="btn btn-primary"><a href="/central/associations/create/success"> CONTINUE <i className="fa fa-long-arrow-right"></i></a></button>
+															<button className="btn btn-primary" onClick={this.handleNext}>CONTINUE <i className="fa fa-long-arrow-right"></i></button>
 														</div>
 													</div>
 												</div>
 											</div>
-										</form>
 											</div>
 										</div>
 									</div>

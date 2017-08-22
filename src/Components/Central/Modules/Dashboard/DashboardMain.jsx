@@ -1,18 +1,69 @@
 import React from 'react'
+import axios from 'axios'
 import Sidebar from 'Components/Central/CentralSidebar'
+import Associations from 'Components/Central/Modules/Associations/Components/Associations'
 import AssociationLogo from 'img/logo-ass.png'
 import Logo from 'img/logo-white.svg'
 import { Button, Modal } from 'semantic-ui-react'
 
 
 class Dashboard extends React.Component{
-	state = { open: false }
+	constructor(props) {
+		super(props);
+		this.state = {name:'', email:'', password: '', open: false, asscoiations_count:'' }
+	}
+
+	handleChange = (e) => {
+		this.setState({[e.target.name]: e.target.value})
+	}
+
+	handleSubmit = (e) => {
+		var {email,password} = this.state
+		axios.post('http://localhost:3001/account/login', {
+		    email: email,
+		    password: password
+		  })
+		  .then(function (response) {
+		  	if(response.data['status'] ==  false)
+		    {
+		    	alert('Wrong username or password')
+		    }
+		    else
+		    {
+		    	window.location = '/central/dashboard'
+		    }
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
+
+	componentDidMount() {
+		var self = this;
+		var id = localStorage.getItem('id');
+		axios.get('http://localhost:3001/account/details/' + id)
+		  .then(function (response) {
+			self.setState({name:response.data['name']})
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+
+		axios.get('http://localhost:3001/associations/list/'+id)
+		.then(function (response){
+			console.log(response.data)
+				self.setState({asscoiations_count:response.data.length})
+		})
+		.catch(function (error){
+			console.log(error);
+		});
+	}
 
   	show = (size) => () => this.setState({ size, open: true })
   	close = () => this.setState({ open: false })
 
 	render(){
-		const { open, size } = this.state
+		const { open, size, name, asscoiations_count } = this.state
 		return(
 			<div className="off-canvas-wrapper1">
 				<div className="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
@@ -30,7 +81,7 @@ class Dashboard extends React.Component{
 						<div className="content">
 								<div className="row ad-block">
 									<div className="medium-6 columns">
-										<p>Welcome Aizuddin Badry</p>
+										<p>Welcome {name}</p>
 									</div>
 									<div className="medium-6 columns">
 										<p className="float-right">Monday, January 05, 2017</p>
@@ -61,7 +112,7 @@ class Dashboard extends React.Component{
 													</center>
 												</div>
 												<div className="large-10 columns noti-4">
-													<h5>0</h5>
+													<h5>{asscoiations_count}</h5>
 													<p>ASSOCIATION</p>
 												</div>
 											</div>
@@ -90,28 +141,10 @@ class Dashboard extends React.Component{
 											<li className="tabs-title"><a className="align-left" aria-selected="true">ASSOCIATION</a></li>
 										</ul>
 
-										<div className="tabs-content">
-											<center>
-												<img className="content-icon" src={AssociationLogo}/>
-												<p className="mid-bold">There are no associations!</p>
-												<p>Create your associations account to get more features from recober!</p>
-												<Button onClick={this.show('tiny')} color="teal">ADD ASSOCIATION</Button>
-											</center>
-										</div>
+										<Associations/>
+
 									</div>
 								</div>
-								<Modal size={size} open={open} onClose={this.close}>
-						          <Modal.Content>
-						            <Modal.Description>
-						            <center>
-						              <p><b>OOPS!</b></p>
-						              <p>You dont have any association yet. </p> <p>Lets create one!</p>
-						              <Button onClick={this.show('tiny')} color="teal">CREATE ASSOCIATION</Button>
-						            </center>
-						            </Modal.Description>
-						          </Modal.Content>
-						        </Modal>
-
 							</div>
 						</div>
 					</div>

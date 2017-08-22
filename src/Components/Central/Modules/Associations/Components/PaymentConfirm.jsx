@@ -1,8 +1,40 @@
 import React from 'react'
+import axios from 'axios'
 import Sidebar from 'Components/Central/CentralSidebar'
 
 class PaymentConfirm extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {custom_id:'',associations_name:'',domain:''}
+	}
+
+	componentDidMount() {
+		this.setState({
+			custom_id:localStorage.getItem('custom_id'),
+			associations_name:localStorage.getItem('associations_name'),
+			domain:localStorage.getItem('domain')
+		})
+	}
+
+  	handleSubmit = (e) => {
+		var {associations_name,domain,custom_id} = this.state
+		var id = localStorage.getItem('id');
+		axios.post('http://localhost:3001/associations/create', {
+			name: associations_name,
+		    domain: domain,
+		    user_id: id,
+		    custom_id: custom_id
+		  })
+		  .then(function (response) {
+		 	console.log(response.data)
+		 	window.location = '/central/associations'
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+  	}
 	render(){
+		var {custom_id,associations_name,domain} = this.state
 		return(
 			<div className="off-canvas-wrapper1">
 				<div className="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
@@ -24,7 +56,6 @@ class PaymentConfirm extends React.Component{
 											<li className="tabs-title"><a className="align-left" aria-selected="true">ASSOCIATION SETTINGS</a></li>
 										</ul>
 										<div className="tabs-content" data-tabs-content="deeplinked-tabs">
-												<form>
 													<div className="sub-content">
 														<p className="align-text">You just need a few steps to add your association</p>
 														<div className="row">
@@ -54,17 +85,17 @@ class PaymentConfirm extends React.Component{
 																		<tr>
 																			<td>Association Name</td>
 																			<td>:</td>
-																			<td>Kelab Rakan Muda Selangor</td>
+																			<td>{associations_name}</td>
 																		</tr>
 																		<tr>
 																			<td>Domain Name</td>
 																			<td>:</td>
-																			<td>krmselangor.recober.com</td>
+																			<td>{domain}</td>
 																		</tr>
 																		<tr>
 																			<td>Membership ID</td>
 																			<td>:</td>
-																			<td>KRMS</td>
+																			<td>{custom_id}</td>
 																		</tr>
 																	</table><br/>
 																	<p className="mid-bold">PAYMENT SUMMARY</p>
@@ -96,12 +127,11 @@ class PaymentConfirm extends React.Component{
 																	<button className="btn cancel"><a href="payment.html">BACK</a></button>
 																</div>
 																<div className="small-6 large-6 columns-2">
-																	<button className="btn btn-primary"><a data-open="modal">CONTINUE <i className="fa fa-long-arrow-right"></i></a></button>
+																	<button className="btn btn-primary" onClick={this.handleSubmit}>CONTINUE <i className="fa fa-long-arrow-right"></i></button>
 																</div>
 															</div>
 														</div>
 													</div>
-												</form>
 											</div>
 										</div>
 									</div>

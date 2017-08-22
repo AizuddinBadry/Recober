@@ -4,11 +4,30 @@ import { Button, Modal } from 'semantic-ui-react'
 
 
 class AssociationsDomain extends React.Component{
-	state = { open: false }
+	constructor(props) {
+		super(props);
+		this.state = {open:false,domain:''}
+	}
 
   	show = (size) => () => this.setState({ size, open: true })
   	close = () => this.setState({ open: false })
 
+  	handleChange = (e) => {
+  		this.setState({domain:e.target.value + '.recober.com'})
+  	}
+
+  	handleNext = (e) => {
+		var {domain} = this.state
+  		localStorage.setItem('domain', domain)
+  		if(localStorage.getItem('domain'))
+  		{
+  			window.location = '/central/associations/create/membership'
+  		}
+  		else
+  		{
+
+  		}
+  	}
 	render(){
 		const { open, size } = this.state
 		return(
@@ -32,49 +51,47 @@ class AssociationsDomain extends React.Component{
 											<li className="tabs-title"><a className="align-left" aria-selected="true">ASSOCIATION SETTINGS</a></li>
 										</ul>
 										<div className="tabs-content" data-tabs-content="deeplinked-tabs">
-												<form>
-														<div className="sub-content align-text">
-															<p>You just need a few steps to add your association</p>
-															<div className="row">
-																<div className="large-12 columns">
-																	<ol className="progress-indicator">
-																		<li className="is-to-complete" data-step="1"></li>
-																		<li className="" data-step="2"></li>
-																		<li className="" data-step="3"></li>
-																		<li className="" data-step="4"></li>
-																		<li className="" data-step="5"></li>
-																	</ol>
-																</div>
+											<div className="sub-content align-text">
+												<p>You just need a few steps to add your association</p>
+												<div className="row">
+													<div className="large-12 columns">
+														<ol className="progress-indicator">
+															<li className="is-to-complete" data-step="1"></li>
+															<li className="" data-step="2"></li>
+															<li className="" data-step="3"></li>
+															<li className="" data-step="4"></li>
+															<li className="" data-step="5"></li>
+														</ol>
+													</div>
+												</div>
+												<p className="mid-bold">STEP 1.1 : RECOBER DOMAIN</p>
+												<p>Enter your association’s <span className="mid-bold">Recober Domain.</span></p>
+												<div className="row">
+													<div className="small-5 small-centered columns ass-input-center">
+														<div className="row">
+															<div className="large-9 columns-1">
+																<input id="right-label" name="domain" type="text" onChange={this.handleChange}/>
 															</div>
-															<p className="mid-bold">STEP 1.1 : RECOBER DOMAIN</p>
-															<p>Enter your association’s <span className="mid-bold">Recober Domain.</span></p>
-															<div className="row">
-																<div className="small-5 small-centered columns ass-input-center">
-																	<div className="row">
-																		<div className="large-9 columns-1">
-																			<input id="right-label" name="ass_name" type="text"/>
-																		</div>
-																		<div className="large-3 columns-2 label-domain">
-																			<label for="right-label">.recober.com</label>
-																		</div>
-																	</div>
-																</div>
-															</div>
-															<div className="row">
-																<div className="large-12 large-centered columns">
-																	<p className="green small"><i className="fa fa-check-circle"></i> <span>Recober domain available</span></p>
-																</div>
-															</div>
-															<div className="row step-button">
-																<div className="small-6 large-6 columns-1">
-																	<button className="btn cancel"><a href="/central/associations/create/name">BACK</a></button>
-																</div>
-																<div className="small-6 large-6 columns-2">
-																	<button className="btn btn-primary"><a href="/central/associations/create/membership">CONTINUE <i className="fa fa-long-arrow-right"></i></a></button>
-																</div>
+															<div className="large-3 columns-2 label-domain">
+																<label for="right-label">.recober.com</label>
 															</div>
 														</div>
-													</form>
+													</div>
+												</div>
+												<div className="row">
+													<div className="large-12 large-centered columns">
+														<p className="green small"><i className="fa fa-check-circle"></i> <span>Recober domain available</span></p>
+													</div>
+												</div>
+												<div className="row step-button">
+													<div className="small-6 large-6 columns-1">
+														<button className="btn cancel"><a href="/central/associations/create/name">BACK</a></button>
+													</div>
+													<div className="small-6 large-6 columns-2">
+														<button className="btn btn-primary" onClick={this.handleNext}>CONTINUE <i className="fa fa-long-arrow-right"></i></button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

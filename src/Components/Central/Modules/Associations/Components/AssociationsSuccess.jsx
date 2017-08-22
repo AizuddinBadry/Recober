@@ -5,13 +5,29 @@ import { Button, Modal } from 'semantic-ui-react'
 
 
 class AssociationsSuccess extends React.Component{
-	state = { open: false }
+	constructor(props) {
+		super(props);
+		this.state = {custom_id:''}
+	}
 
-  	show = (size) => () => this.setState({ size, open: true })
-  	close = () => this.setState({ open: false })
+	componentDidMount() {
+		this.setState({custom_id:localStorage.getItem('custom_id')})
+	}
 
+  	handleNext = (e) => {
+		var {custom_id} = this.state
+  		localStorage.setItem('custom_id', custom_id)
+  		if(localStorage.getItem('custom_id'))
+  		{
+  			window.location = '/central/associations/create/success'
+  		}
+  		else
+  		{
+
+  		}
+  	}
 	render(){
-		const { open, size } = this.state
+		var {custom_id} = this.state;
 		return(
 			<div className="off-canvas-wrapper1">
 				<div className="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
@@ -58,7 +74,7 @@ class AssociationsSuccess extends React.Component{
 														<div className="large-12 large-centered column ass-input">
 															<p className="bold">SUCCESS!</p>
 															<p>Your association’s membership ID is</p>
-															<h4 className="mid-bold green">ABCA8s</h4>
+															<h4 className="mid-bold green">{custom_id}</h4>
 														</div>
 													</div>
 													<div className="row step-button">

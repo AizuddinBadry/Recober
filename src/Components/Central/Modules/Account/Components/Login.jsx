@@ -1,14 +1,46 @@
 import React from 'react'
+import axios from 'axios'
 import Logo from 'img/logo-full-recober-white.svg'
 
 class Login extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {name:'', email:'', password: ''}
+	}
+
+	handleChange = (e) => {
+		this.setState({[e.target.name]: e.target.value})
+	}
+
+	handleSubmit = (e) => {
+		var {email,password} = this.state
+		axios.post('http://localhost:3001/account/login', {
+		    email: email,
+		    password: password
+		  })
+		  .then(function (response) {
+		  	console.log(response.data['id'])
+		  	if(response.data['status'] ==  false)
+		    {
+		    	alert('Wrong username or password')
+		    }
+		    else
+		    {
+		    	localStorage.setItem('id', response.data['id'])
+		    	window.location = '/central/dashboard'
+		    }
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
 	render(){
 		return(
 			<div className="devise">
 			<div className="row align-center">
 			<div className="small-11 medium-8 large-5 large-centered medium-centered small-centered columns">
 				<div className="heading"><center><img src={Logo}/></center></div>
-				<form className="register-form">
+				<div className="register-form">
 					<div className="row">
 						<div className="large-12 columns">
 							<p className="align-text sign">LOGIN</p>
@@ -18,8 +50,8 @@ class Login extends React.Component{
 					
 					<div className="row"> 
 						<div className="large-12 column">
-							<input type="email" name="emel" placeholder="Email Address"/>
-							<input type="text" name="password" placeholder="Password"/>
+							<input type="email" name="email" placeholder="Email Address" onChange={this.handleChange}/>
+							<input type="password" name="password" placeholder="Password" onChange={this.handleChange}/>
 						</div>
 					</div>
 
@@ -35,11 +67,11 @@ class Login extends React.Component{
 						<button className="btn cancel"><a href="#">CANCEL</a></button>
 						</div>
 						<div className="large-6 columns-2">
-						<button className="btn btn-primary"><a href="/central/dashboard">LOG IN</a></button>
+						<button className="btn btn-primary" onClick={this.handleSubmit}>LOG IN</button>
 						</div>
 						
 					</div>
-						</form>
+						</div>
 					</div>
 			</div>
 			</div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Central from 'Components/Central/CentralMain'
+import Spring from 'Components/Spring/SpringMain'
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +10,9 @@ import {
 const routes = [
 		  { path: '/central',
 		    main: () => <Central/>
+		  },
+		  { path: '/spring',
+		    main: () => <Spring/>
 		  }
 		]
 
