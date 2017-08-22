@@ -1,8 +1,97 @@
 import React from 'react'
+import axios from 'axios'
 import Sidebar from 'Components/Spring/SpringSidebar';
-import {Modal,Tab} from 'semantic-ui-react'
+import {Modal,Tab,Radio} from 'semantic-ui-react'
 
-const NewProfileWindow = () =>{
+class Item extends React.Component {
+  render() {
+    return (
+    <tbody>
+		<tr>
+			<td>{this.props.key}</td>
+			<th>
+				<b>{this.props.name}</b>
+			</th>
+			<td></td>
+			<td></td>
+		</tr>
+      { this.props.fields }
+    </tbody>
+    )
+  }
+}
+
+class NewProfileWindow extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {groups:[],name:'',description:'',published:false,approval:false}
+	}
+
+	componentDidMount() {
+		var self = this;
+		var association_id = localStorage.getItem('association_id');
+		  axios.get('http://localhost:3001/profiles/data/'+association_id+'/list/')
+		  .then(function (response) {
+			self.setState({groups:response.data})
+			console.log(response.data)
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
+
+	list = (data) =>{
+			var fields = (profile_fields) => {
+				if(profile_fields){
+					return profile_fields.map((index, i) => {
+						return (
+		                 <tr key={i}>
+							<td>{i+1}</td>
+							<td>{index.name}</td>
+							<td>{index.field_type}</td>
+							<td><Radio toggle /></td>
+						</tr>
+		              )
+					})    
+		          }
+		      }
+		      return data.map((node, index) => {
+			      return (
+			      	<Item 
+			      	key={ node.id } 
+			      	name={ node.name } 
+			      	fields={ fields(node.profile_fields) }>
+			        { fields(node.profile_fields) }
+			      </Item>
+			      )
+			    });
+		}
+
+	handleChange = (e) => {
+		this.setState({[e.target.name]:e.target.value})
+	}
+
+	handleSubmit = (e) => {
+		var self = this;
+		const {name,approval,published,description} = this.state;
+		var association_id = localStorage.getItem('association_id');
+		axios.post('http://localhost:3001/profiles/new',{
+			name:name,
+			description:description,
+			published:published,
+			approval:approval,
+			association_id:association_id
+
+		})
+		  .then(function (response) {
+			window.location = '/spring/profile'
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
+	render(){
+		const {name,description,published,approval} = this.state
 		return(
 			<div className="tabs-content main-tab" data-tabs-content="deeplinked-tabs">
 				<div className="dash-sub-content">
@@ -21,11 +110,12 @@ const NewProfileWindow = () =>{
 								<div className="large-6 columns">
 									<div className="row">
 										<div className="small-3 columns">
-											<label className="middle" for="profile-name">Name</label> <label className="middle" for="profile-desc">Description</label>
+											<label className="middle" for="profile-name">Name</label> 
+											<label className="middle" for="profile-desc">Description</label>
 										</div>
 										<div className="small-9 columns">
-											<input id="profile-name" type="text"/> 
-											<textarea rows="5"></textarea>
+											<input id="profile-name" type="text" name='name' value={name} onChange={this.handleChange}/> 
+											<textarea rows="5" name="description" value={description} onChange={this.handleChange}></textarea>
 										</div>
 									</div>
 								</div>
@@ -38,31 +128,6 @@ const NewProfileWindow = () =>{
 										<input type="checkbox"/><label className="mid-bold">Approval</label>
 										<p>This custom profile need approval from admin</p>
 									</div>
-									<div className="label-checkbox">
-										<p><i className="fa fa-plus-circle"></i><a className="garis featured-title"> Featured Field on Profile</a></p>
-									</div>
-									<table className="noBorder unstriped full">
-										<tbody>
-											<tr>
-												<td>Email Address</td>
-												<td>
-													<a className="garis red align-right" href="#">remove</a>
-												</td>
-											</tr>
-											<tr>
-												<td>User Profile</td>
-												<td>
-													<a className="garis red align-right" href="#">remove</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Mobile Phone</td>
-												<td>
-													<a className="garis red align-right" href="#">remove</a>
-												</td>
-											</tr>
-										</tbody>
-									</table>
 								</div>
 							</div>
 						</form>
@@ -81,81 +146,12 @@ const NewProfileWindow = () =>{
 								<td>INCLUDE</td>
 							</tr>
 						</thead>
-						<tbody className="table-main">
-							<tr>
-								<td></td>
-								<th >Basic Information</th>
-							</tr>
-							<tr>
-								<td className="align-text">1</td>
-								<td>Gender</td>
-								<td>gender</td>
-								<td>
-									<div className="switch2 tiny">
-										<input className="switch-input" id="enable-switch" name="enable-disable" type="checkbox"/> <label className="switch-paddle" for="enable-switch"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td className="align-text">2</td>
-								<td>Birthdate</td>
-								<td>birthdate</td>
-								<td>
-									<div className="switch2 tiny">
-										<input className="switch-input" id="enable-switch2" name="enable-disable" type="checkbox"/> <label className="switch-paddle" for="enable-switch2"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td className="align-text">3</td>
-								<td>About Me</td>
-								<td>textarea</td>
-								<td>
-									<div className="switch2 tiny">
-										<input className="switch-input" id="enable-switch3" name="enable-disable" type="checkbox"/> <label className="switch-paddle" for="enable-switch3"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<th>Contact Information</th>
-							</tr>
-							<tr>
-								<td className="align-text">1</td>
-								<td>Gender</td>
-								<td>gender</td>
-								<td>
-									<div className="switch2 tiny">
-										<input className="switch-input" id="enable-switch4" name="enable-disable" type="checkbox"/> <label className="switch-paddle" for="enable-switch4"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td className="align-text">2</td>
-								<td>Birthdate</td>
-								<td>birthdate</td>
-								<td>
-									<div className="switch2 tiny">
-										<input className="switch-input" id="enable-switch5" name="enable-disable" type="checkbox"/> <label className="switch-paddle" for="enable-switch5"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td className="align-text">3</td>
-								<td>About Me</td>
-								<td>textarea</td>
-								<td>
-									<div className="switch2 tiny">
-										<input className="switch-input" id="enable-switch6" name="enable-disable" type="checkbox"/> <label className="switch-paddle" for="enable-switch6"></label>
-									</div>
-								</td>
-							</tr>
-						</tbody>
+							{ this.list(this.state.groups) }
 					</table>
 				</div>
 		</div>	
-			)
-	}
+	)}
+}
 
 
 class add_profile extends React.Component{
