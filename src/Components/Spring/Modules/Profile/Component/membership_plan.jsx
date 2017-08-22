@@ -1,9 +1,83 @@
 import React from 'react'
+import axios from 'axios'
 import { Modal } from 'semantic-ui-react'
 
 class membership_plan extends React.Component{
-	
+	constructor(props) {
+		super(props);
+		this.state = {name:'',description:'',payment_type:'',duration:'',units:'',currency:'',amount:'',membership_list:[]}
+	}
+
+	componentDidMount() {
+		var self = this;
+		var association_id = localStorage.getItem('association_id');
+		axios.get('http://localhost:3001/profiles/membership/'+association_id+'/list/')
+		  .then(function (response) {
+			self.setState({membership_list:response.data})
+			console.log(response.data)
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
+
+	handleChange = (e) =>{
+		this.setState({[e.target.name]:e.target.value})
+	}
+
+	handleChecked = (e) =>{
+		if(e.target.checked)
+		{
+			this.setState({[e.target.name]:e.target.value})
+		}
+		else
+		{
+
+		}
+	}
+
+	handleSubmit = (e) =>{
+		var self = this;
+		const {name,description,payment_type,duration,units,currency,amount} = this.state;
+		var association_id = localStorage.getItem('association_id');
+		axios.post('http://localhost:3001/profiles/membership/new',{
+			name:name,
+			description:description,
+			payment_type:payment_type,
+			duration:duration,
+			units:units,
+			currency:currency,
+			amount:amount,
+			association_id:association_id
+
+		})
+		  .then(function (response) {
+			window.location.reload()
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+	}
+
+
 	render(){
+		const {name,description,payment_type,duration,units,currency,amount,membership_list} = this.state;
+		const list = membership_list.map((index, i) => {
+			return(
+				<tr>
+					<td className="multi-prof"><input id="memberplan2" type="checkbox"/></td>
+					<td>
+						<a href="#">{index.name}</a>
+					</td>
+					<td>{index.description}</td>
+					<td>{index.currency+''}{index.amount}</td>
+					<td>{index.payment_type}</td>
+					<td>{index.duration+''}{index.units}</td>
+					<td>{index.created_at}</td>
+					<td><i className="fa fa-check-circle publish"></i></td>
+				</tr>
+				)
+		})
 		return(
 			<div>
 				<div className="dash-sub-content">
@@ -17,21 +91,31 @@ class membership_plan extends React.Component{
 							      <Modal.Description>
 							        <div className="row">
 										<div className="large-6 columns">
-											<label for="plan-name">Plan Name</label> <input id="plan-name" type="text"/> <label for="plan-desc">Description</label> 
-											<textarea id="plan-desc" rows="5"></textarea>
+											<label for="plan-name">Plan Name</label>
+											<input name="name" type="text" value={name	} onChange={this.handleChange}/> 
+											<label for="plan-desc">Description</label> 
+											<textarea id="plan-desc" rows="5" name='description' onChange={this.handleChange}></textarea>
 										</div>
 										<div className="large-6 columns">
-											<label>Payment Type</label> <input checked="checked" id="payment-type" name="payment-type" required="" type="radio" value="single"/><label for="payment-type">Single</label> <input id="payment-type" name="payment-type" type="radio" value="recurring"/><label for="payment-type">Recurring</label> <input id="payment-type" name="payment-type" type="radio" value="free"/><label for="payment-type">Free</label>
+											<label>Payment Type</label>
+											 <input checked="checked"  name="payment_type" required="" type="radio" value="single" onChange={this.handleChecked}/>
+											 <label for="payment-type">Single</label> 
+											 <input  name="payment_type" type="radio" value="recurring" onChange={this.handleChecked}/>
+											 <label for="payment-type">Recurring</label> 
+											 <input id="payment-type" name="payment_type" type="radio" value="free" onChange={this.handleChecked}/>
+											 <label for="payment-type">Free</label>
 											<div className="row">
 												<div className="large-4 columns-1">
-													<label for="payment-duration">Durations</label><input id="payment-duration" name="payment-duration" type="text"/>
+													<label for="payment-duration">Durations</label>
+													<input id="payment-duration" name="duration" type="text" value={duration} onChange={this.handleChange}/>
 												</div>
 												<div className="large-8 columns-2">
-													<label for="plan-unit">Units</label> <select className="pilih" id="plan-unit">
-														<option>
+													<label for="plan-unit">Units</label> 
+													<select value={units} className="pilih" name='units' onChange={this.handleChange}>
+														<option value="month">
 															Month
 														</option>
-														<option>
+														<option value="year">
 															Year
 														</option>
 													</select>
@@ -39,21 +123,23 @@ class membership_plan extends React.Component{
 											</div>
 											<div className="row">
 												<div className="large-8 columns-1">
-													<label for="plan-currency">Currency</label> <select className="pilih" id="plan-currency">
-														<option value="Malaysia Ringgits - MYR">
+													<label for="plan-currency">Currency</label> 
+													<select className="pilih" name="currency" value={currency} onChange={this.handleChange}>
+														<option value="MYR">
 															Malaysia Ringgits – MYR
 														</option>
-														<option value="United States Dollars - USD">
+														<option value="USD">
 															United States Dollars – USD
 														</option>
 													</select>
 												</div>
 												<div className="large-4 columns-2">
-													<label for="payment-amount">Amount</label><input id="payment-amount" name="payment-amount" type="text"/>
+													<label for="payment-amount">Amount</label>
+													<input id="payment-amount" name="amount" type="text" value={amount} onChange={this.handleChange}/>
 												</div>
 											</div><br/>
 											<div className=" button-group1 float-right">
-												<a className="button1 reset">CANCEL</a> <a className="button1 save">SAVE</a>
+												<a className="button1 reset">CANCEL</a> <a className="button1 save" onClick={this.handleSubmit}>SAVE</a>
 											</div>
 										</div>
 									</div>
@@ -78,18 +164,9 @@ class membership_plan extends React.Component{
 									<td>STATUS</td>
 								</tr>
 							</thead>
-							<tr>
-								<td className="multi-prof"><input id="memberplan2" type="checkbox"/></td>
-								<td>
-									<a href="#">PREMIUM</a>
-								</td>
-								<td>Unlimited Plan</td>
-								<td>RM 19.99</td>
-								<td>Single</td>
-								<td>1 month</td>
-								<td>08/12/2016</td>
-								<td><i className="fa fa-check-circle publish"></i></td>
-							</tr>
+							<tbody>
+							{list}
+							</tbody>
 						</table>
 				</div>
 			</div>

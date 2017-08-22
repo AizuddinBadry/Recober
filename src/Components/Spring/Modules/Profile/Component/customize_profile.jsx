@@ -48,7 +48,6 @@ class customize_profile extends React.Component{
 		  .catch(function (error) {
 		    console.log(error);
 		  });
-
 	}
 
 	handleChange = (e) => {
