@@ -2,6 +2,7 @@ import React from 'react'
 import SpringDashboard from 'Components/Spring/Modules/Dashboard/SpringDashboard'
 import SpringProfile from 'Components/Spring/Modules/Profile/SpringProfile'
 import SpringMembers from 'Components/Spring/Modules/Members/SpringMembers'
+import SpringGroup from 'Components/Spring/Modules/Group/SpringGroup'
 import AddProfile from 'Components/Spring/Modules/Profile/Component/add_profile'
 import AddMembers from 'Components/Spring/Modules/Members/Component/create_members'
 import {
@@ -21,6 +22,10 @@ const routes = [
 		  { path: '/spring/members',
 		  	exact: true,
 		    main: () => <SpringMembers/>
+		  },
+		    { path: '/spring/groups',
+		  	exact: true,
+		    main: () => <SpringGroup/>
 		  },
 		  { path: '/spring/profile/new',
 		  	exact: true,
