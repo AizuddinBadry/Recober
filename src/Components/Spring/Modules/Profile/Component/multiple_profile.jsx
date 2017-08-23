@@ -1,7 +1,40 @@
 import React from 'react'
+import axios from 'axios'
 
 class multiple_profile extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {profile_list:[]}
+	}
+
+	componentDidMount() {
+		var self = this;
+		var association_id = localStorage.getItem('association_id');
+		axios.get('http://localhost:3001/profiles/'+association_id+'/list/')
+		  .then(function (response) {
+			self.setState({profile_list:response.data})
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+
+	}
 	render(){
+		const {profile_list} = this.state;
+		const list = profile_list.map((index, i) =>{
+			return(
+					<tr>
+						<td className="multi-prof"><input id="public-reg" type="checkbox"/></td>
+						<td>
+							<a href="#">{index.name}</a>
+						</td>
+						<td><p>{index.description}</p></td>
+						<td>0</td>
+						<td>{index.published ? <i className="fa fa-check-circle publish"></i> : <i className="fa fa-times-circle unpublish"></i>}</td>
+						<td>{index.created_at}</td>
+					</tr>
+				)
+		})
 		return(
 			<div>
 				<div className="dash-sub-content">
@@ -26,26 +59,7 @@ class multiple_profile extends React.Component{
 							</tr>
 						</thead>
 						<tbody className="table-main">
-						<tr>
-							<td className="multi-prof"><input id="public-reg" type="checkbox"/></td>
-							<td>
-								<a href="#">Member</a>
-							</td>
-							<td><p>Association Members</p></td>
-							<td>2</td>
-							<td><i className="fa fa-check-circle publish"></i></td>
-							<td>08/12/2016</td>
-						</tr>
-						<tr>
-							<td className="multi-prof"><input id="public-reg" type="checkbox"/></td>
-							<td>
-								<a href="#">Member</a>
-							</td>
-							<td><p>Association Members</p></td>
-							<td>2</td>
-							<td><i className="fa fa-check-circle publish"></i></td>
-							<td>08/12/2016</td>
-						</tr>
+						{list}
 						</tbody>
 					</table>
 				</div>

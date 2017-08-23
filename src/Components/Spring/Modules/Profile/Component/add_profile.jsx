@@ -3,6 +3,8 @@ import axios from 'axios'
 import Sidebar from 'Components/Spring/SpringSidebar';
 import {Modal,Tab,Radio} from 'semantic-ui-react'
 
+import successLogo from 'img/success.svg'
+
 class Item extends React.Component {
   render() {
     return (
@@ -98,7 +100,24 @@ class NewProfileWindow extends React.Component{
 					<p>Create a new custom profile for your association</p>
 					<div className="row">
 						<div className="large-12 columns multi-prof">
-							<a href="/spring/profile"><i className="fa fa-reply"></i> Back</a> <a data-open="modal"><i className="fa fa-floppy-o"></i> Save</a>
+							<a href="/spring/profile"><i className="fa fa-reply"></i> Back</a> 
+							<Modal size={'tiny'} trigger={<a data-open="modal"><i className="fa fa-floppy-o"></i> Save</a>}>
+							    <Modal.Content>
+							      <Modal.Description>
+							        <div className="content2">
+										<center>
+											<img src={successLogo}/>
+											<p className="thin">Profile has been successfully saved!</p>
+										</center>
+										<div className="row">
+											<div className="large-10 large-centered columns">
+												<p><button className="btn btn-primary" onClick={this.handleSubmit}>OK</button></p>
+											</div>
+										</div>
+									</div>
+							      </Modal.Description>
+							    </Modal.Content>
+							  </Modal>
 						</div>
 					</div>
 					<div className="sub-content1">

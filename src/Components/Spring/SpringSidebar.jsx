@@ -50,17 +50,17 @@ class SpringSidebar extends React.Component{
 					<label>Dashboard</label></a> 
 					<a className="item" href="/spring/profile"><i className="fa fa-id-card-o"></i> 
 					<label>Profile</label></a> 
-					<a className="item" href="members.html"><i className="fa fa-user-o"></i> 
+					<a className="item" href="/spring/members"><i className="fa fa-user-o"></i> 
 					<label>Members</label></a> 
-					<a className="item" href="groups.html"><i className="fa fa-users"></i> 
+					<a className="item" href="/spring/groups"><i className="fa fa-users"></i> 
 					<label>Groups</label></a> 
-					<a className="item" href="announcement.html"><i className="fa fa-thumb-tack"></i> 
+					<a className="item" href="/spring/announcement"><i className="fa fa-thumb-tack"></i> 
 					<label className="label-left">Announcement</label></a> 
-					<a className="item" href="events.html"><i className="fa fa-calendar"></i> 
+					<a className="item" href="/spring/events"><i className="fa fa-calendar"></i> 
 					<label>Events</label></a> 
-					<a className="item" href="gallery.html"><i className="fa fa-picture-o"></i> 
+					<a className="item" href="/spring/gallery"><i className="fa fa-picture-o"></i> 
 					<label>Gallery</label></a> 
-					<a className="item" href="billing.html"><i className="fa fa-tag"></i> 
+					<a className="item" href="/spring/billing"><i className="fa fa-tag"></i> 
 					<label>Billing</label></a>
 				</div>
 			</div>
