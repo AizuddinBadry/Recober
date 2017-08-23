@@ -7,6 +7,7 @@ import GroupSetting from 'Components/Spring/Modules/Group/Component/group_settin
 
 //Assets
 import { Button, Modal, Tab } from 'semantic-ui-react';
+import ArmLogo from 'img/arm.svg';
 
 class create_members extends React.Component{
 	constructor(props) {
@@ -33,7 +34,7 @@ class create_members extends React.Component{
 						<div className="row expanded1">
 							<div className="row column top-head">
 								<h1>GROUP</h1>
-								<a href="/central/dashboard" className="dsh01"><img /> GO TO ARM</a>
+								<a href="/central/dashboard" className="dsh01"><img src={ArmLogo}/> GO TO ARM</a>
 							</div>
 							<div className="content">
 								<div className="row">

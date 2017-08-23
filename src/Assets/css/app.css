@@ -951,6 +951,31 @@ button:hover, button:hover a{
   width: 100%;
 }
 
+.ann-list tr
+{
+  height: 76px;
+}
+.ann-list img
+{
+  padding: 0.7em;
+  margin-right: 1em;
+  max-width: 80px;
+}
+.ann-list p
+{
+  margin:0;
+}
+.ann-list-id
+{
+  padding-top: 1.5em;
+}
+
+.boxes {
+ height: 300px;
+ overflow: auto;
+ border: 1px solid #f4f4f1;
+}
+
 .tab{
   padding:0 15px;
 }
@@ -1185,6 +1210,27 @@ hr
     padding-left: 50px;
     padding-right: 50px;
 }
+td.post-by
+{
+  width: 12.5em;
+}
+
+.multi-prof
+{
+  margin-top: 0.7em;
+}
+
+.multi-prof [type='checkbox']
+{
+  margin: 0 0 0 0.7em ;
+}
+
+.multi-prof a
+{
+  color: #474747;
+  font-size: 14px;
+  padding: 0 10px;
+}
 
 .align-center {
   -webkit-box-pack: center;
@@ -1203,6 +1249,11 @@ hr
 
 .align-left, .align-left a{
   text-align: left !important;
+}
+
+td.align-left-announcement
+{
+  width:40%;
 }
 
 @media only screen and (max-width: 40em) 
