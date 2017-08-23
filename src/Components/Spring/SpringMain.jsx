@@ -3,6 +3,7 @@ import SpringDashboard from 'Components/Spring/Modules/Dashboard/SpringDashboard
 import SpringProfile from 'Components/Spring/Modules/Profile/SpringProfile'
 import SpringMembers from 'Components/Spring/Modules/Members/SpringMembers'
 import AddProfile from 'Components/Spring/Modules/Profile/Component/add_profile'
+import AddMembers from 'Components/Spring/Modules/Members/Component/create_members'
 import {
   BrowserRouter as Router,
   Route,
@@ -24,6 +25,10 @@ const routes = [
 		  { path: '/spring/profile/new',
 		  	exact: true,
 		    main: () => <AddProfile/>
+		  },
+		   { path: '/spring/members/new',
+		  	exact: true,
+		    main: () => <AddMembers/>
 		  }
 		]
 

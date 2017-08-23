@@ -63,7 +63,8 @@ class SpringProfile extends React.Component{
 		  	<div className="dash-sub-content">
 				<div className="row">
 					<div className="large-9 columns multi-prof">
-						<a href=""><i className="fa fa-check-circle publish"></i> Approve</a> <a href=""><i className="fa fa-times-circle unpublish"></i> Block</a> <a href=""><i className="fa fa-trash"></i> Delete</a> <a href="add_members.html"><i className="fa fa-plus-circle"></i> New</a> <a href="#"><i className="fa fa-download"></i> Export</a>
+						<a href=""><i className="fa fa-check-circle publish"></i> Approve</a> <a href=""><i className="fa fa-times-circle unpublish"></i> Block</a> <a href=""><i className="fa fa-trash"></i> Delete</a> 
+						<a href="/spring/members/new"><i className="fa fa-plus-circle"></i> New</a> <a href="#"><i className="fa fa-download"></i> Export</a>
 					</div>
 					<div className="large-3 columns search">
 						<input placeholder="Search" type="text"/> <a className="float-right" href="#"><i className="fa fa-search"></i></a>

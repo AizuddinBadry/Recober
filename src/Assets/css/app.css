@@ -21,6 +21,34 @@ body{
   opacity: 1;
 }
 
+.member-photo{
+    position: absolute;
+    margin-top: -1em;
+    padding: 6em 6.5em;
+    background-image: url('../img/bg-upload.svg');
+    height:10px;
+    background-repeat: no-repeat;
+}
+
+.member-form
+{
+  margin-top: 6em;
+}
+
+.member-photo-content
+{
+  margin-left: -6em;
+  margin-top: -3.5em;
+}
+.member-photo-content p
+{
+  width: 160px; padding-left: 1em;
+}
+.member-photo-content a
+{
+  margin-left: 0.7em;
+}
+
 
 .switch-input {
   position: absolute;
@@ -1255,6 +1283,13 @@ hr
     -webkit-box-align: stretch;
     min-height: 100%;
 }
+
+.upload-label
+{
+  margin-top: 4em;
+  margin-bottom: 0;
+}
+
 
 .content {
   width: 100%;
